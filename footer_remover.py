@@ -60,13 +60,13 @@ def make_images(
     return {"images":cropped_images,"filename":filename, "output_pdf":output["output_pdf"]}
 
 
-def main():
+def make_pdf(output_root = os.path.dirname(__file__)+"\\Patched PDFs"):
     for dirpath, dirnames, filenames in os.walk(os.getcwd()):
         for filename in filenames:
             file_path = (f"{dirpath}\\{filename}")
 
             if filename.endswith(('.pdf')):
-                res = make_images(file_path, os.path.dirname(__file__)+"\\Patched PDFs",True)
+                res = make_images(file_path, output_root ,True)
 
                 if len(res["images"]) != 1:
                     first = res["images"][0]
@@ -75,4 +75,5 @@ def main():
                 else:
                     res["images"][0].save(f"{res['output_pdf']}\\{filename}", "PDF", resolution=100.0, save_all=True, append_images=res["images"][1:])
 
-main()
+if __name__ == '__main__':
+    make_pdf()
